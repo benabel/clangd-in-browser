@@ -33,15 +33,8 @@ jobs:
           sudo apt install vim git build-essential cmake ninja-build python3
           ./build.sh
       - run: pnpm build
-      - uses: actions/upload-pages-artifact@v1
+      - uses: jsmrcaga/action-netlify-deploy@v2.0.0
         with:
-          path: ./dist
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - uses: actions/deploy-pages@v1
-        id: deployment
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_ID }}
+          build_directory: 'dist'
